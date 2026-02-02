@@ -23,6 +23,7 @@ const CreateSession = () => {
 
   // Track which session's participants are open (for toggling)
   const [openParticipantsSessionId, setOpenParticipantsSessionId] = useState(null);
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
 
   // Get logged-in user data from localStorage
   const userData = JSON.parse(localStorage.getItem('user')) || {};
@@ -35,7 +36,7 @@ const CreateSession = () => {
   const fetchSessions = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:5000/api/sessions?created_by=' + userId, { headers: authHeader });
+      const res = await fetch(`${API_BASE_URL}/api/sessions?created_by=${userId}`, { headers: authHeader });
       if (!res.ok) throw new Error('Failed to fetch sessions');
       const data = await res.json();
       setSessions(data);
@@ -50,7 +51,7 @@ const CreateSession = () => {
   // Fetch categories for dropdown
   const fetchCategories = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/categories', { headers: authHeader });
+      const res = await fetch(`${API_BASE_URL}/api/categories`, { headers: authHeader });
       if (!res.ok) throw new Error('Failed to fetch categories');
       const data = await res.json();
       setCategories(data);
@@ -70,7 +71,7 @@ const CreateSession = () => {
       setParticipantsLoading(prev => ({ ...prev, [sessionId]: true }));
       setParticipantsError(prev => ({ ...prev, [sessionId]: '' }));
 
-      const res = await fetch(`http://localhost:5000/api/sessions/${sessionId}/participants`, { headers: authHeader });
+     const res = await fetch(`${API_BASE_URL}/api/sessions/${sessionId}/participants`, { headers: authHeader });
       if (!res.ok) throw new Error('Failed to fetch participants');
       const data = await res.json();
 
@@ -101,9 +102,9 @@ const CreateSession = () => {
       setParticipantsLoading(prev => ({ ...prev, [sessionId]: true }));
       setParticipantsError(prev => ({ ...prev, [sessionId]: '' }));
 
-      const res = await fetch(
-        `http://localhost:5000/api/sessions/${sessionId}/participants/${encodeURIComponent(email)}`,
-        { method: 'DELETE', headers: authHeader }
+     const res = await fetch(
+      `${API_BASE_URL}/api/sessions/${sessionId}/participants/${encodeURIComponent(email)}`,
+      { method: 'DELETE', headers: authHeader }
       );
 
       const data = await res.json();
@@ -140,9 +141,9 @@ const CreateSession = () => {
     }
 
     try {
-      const url = editingSession
-        ? `http://localhost:5000/api/sessions/${editingSession.id}`
-        : 'http://localhost:5000/api/sessions';
+     const url = editingSession
+      ? `${API_BASE_URL}/api/sessions/${editingSession.id}`
+      : `${API_BASE_URL}/api/sessions`;
 
       const method = editingSession ? 'PUT' : 'POST';
 
@@ -202,7 +203,7 @@ const CreateSession = () => {
     if (!window.confirm('Are you sure you want to delete this session?')) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/sessions/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/sessions/${id}`, {
         method: 'DELETE',
         headers: authHeader
       });

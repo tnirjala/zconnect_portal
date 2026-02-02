@@ -3,14 +3,15 @@ import React, { useEffect, useState } from 'react';
 const UserMoodList = () => {
   const [moods, setMoods] = useState([]);
   
-  useEffect(() => {
-    fetch('http://localhost:5000/api/counselor/moods')
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) setMoods(data.moods);
-      })
-      .catch(err => console.error('Mood fetch failed', err));
-  }, []);
+ useEffect(() => {
+  fetch(`${process.env.REACT_APP_API_URL}/api/counselor/moods`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) setMoods(data.moods);
+    })
+    .catch(err => console.error('Mood fetch failed', err));
+}, []);
+
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-100 via-rose-50 to-pink-200 p-6">

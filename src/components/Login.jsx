@@ -85,7 +85,8 @@ const Login = () => {
     
 
     try {
-      const res = await axios.post('http://localhost:5000/api/login', form);
+      console.log('API URL:', process.env.REACT_APP_API_URL);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/login`, form);
       setMessage({ text: res.data.message, type: 'success' });
 
       // Store user data in localStorage

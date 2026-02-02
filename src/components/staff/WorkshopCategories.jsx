@@ -15,27 +15,28 @@ const WorkshopCategories = () => {
   const userData = JSON.parse(localStorage.getItem('user')) || {};
   const userId = userData.id;
   const userName = userData.name || 'Unknown User';
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
 
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/categories', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setCategories(data);
-      } else {
-        setError('Failed to fetch categories');
+const fetchCategories = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/categories`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
-    } catch (err) {
-      setError('Network error occurred');
-    } finally {
-      setLoading(false);
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      setCategories(data);
+    } else {
+      setError('Failed to fetch categories');
     }
-  };
+  } catch (err) {
+    setError('Network error occurred');
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchCategories();
@@ -57,9 +58,9 @@ const WorkshopCategories = () => {
     }
 
     try {
-      const url = editingCategory
-        ? `http://localhost:5000/api/categories/${editingCategory.id}`
-        : 'http://localhost:5000/api/categories';
+    const url = editingCategory
+      ? `${API_BASE_URL}/api/categories/${editingCategory.id}`
+      : `${API_BASE_URL}/api/categories`;
 
       const method = editingCategory ? 'PUT' : 'POST';
 
@@ -107,10 +108,10 @@ const WorkshopCategories = () => {
     if (!window.confirm('Are you sure you want to delete this category?')) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/categories/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+    const response = await fetch(`${API_BASE_URL}/api/categories/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
 

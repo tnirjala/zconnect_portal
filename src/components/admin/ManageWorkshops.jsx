@@ -6,6 +6,7 @@ import {
   FiImage, FiEye, FiXCircle
 } from 'react-icons/fi';
 
+
 const ManageWorkshops = () => {
   const [workshops, setWorkshops] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,11 +16,12 @@ const ManageWorkshops = () => {
   const [debugInfo, setDebugInfo] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageErrors, setImageErrors] = useState({});
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
 
   // Debug function to test API endpoint
   const testApiEndpoint = async () => {
     try {
-      const testUrl = 'http://localhost:5000/api/workshops';
+      const testUrl = `${API_BASE_URL}/api/workshops`;
       console.log('Testing direct API call to:', testUrl);
       
       const response = await fetch(testUrl, {
@@ -56,7 +58,7 @@ Response preview: ${text.substring(0, 200)}...`);
       console.log('Fetching workshops from relative path...');
       
       // Try relative path first
-      let response = await fetch('/api/workshops', {
+       const response = await fetch(`${API_BASE_URL}/api/workshops`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -118,7 +120,7 @@ Try the "Test Direct API" button below.`);
       console.log('Updating workshop status:', { workshopId, newStatus });
       
       // Try relative path first, then absolute
-      let response = await fetch(`/api/workshops/${workshopId}/status`, {
+       const response = await fetch(`${API_BASE_URL}/api/workshops/${workshopId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +132,7 @@ Try the "Test Direct API" button below.`);
       // If relative path fails, try absolute path
       if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) {
         console.log('Trying absolute path for status update...');
-        response = await fetch(`http://localhost:5000/api/workshops/${workshopId}/status`, {
+        response = await fetch(`${API_BASE_URL}/api/workshops/${workshopId}/status`,  {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

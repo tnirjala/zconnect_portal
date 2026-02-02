@@ -26,6 +26,7 @@ import {
 
 const { Title } = Typography;
 const { Option } = Select;
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -43,7 +44,7 @@ const ManageUsers = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/admin/users', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/users`, {
         method: 'GET',
         headers: {
           'admin-email': 'zconnect.admin@gmail.com',
@@ -74,7 +75,7 @@ const ManageUsers = () => {
   // Handle creating a new user
   const handleCreateUser = async (values) => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/users', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/users`, {
         method: 'POST',
         headers: {
           'admin-email': 'zconnect.admin@gmail.com',
@@ -106,7 +107,7 @@ const ManageUsers = () => {
   // Handle updating an existing user
   const handleUpdateUser = async (values) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/users/${editingUser.id}`, {
+     const response = await fetch(`${API_BASE_URL}/api/admin/users/${editingUser.id}`, {
         method: 'PUT',
         headers: {
           'admin-email': 'zconnect.admin@gmail.com',
@@ -139,7 +140,7 @@ const ManageUsers = () => {
   // Handle deleting a user
   const handleDeleteUser = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/users/${userId}`, {
+     const response = await fetch(`${API_BASE_URL}/api/admin/users/${userId}`,  {
         method: 'DELETE',
         headers: {
           'admin-email': 'zconnect.admin@gmail.com',

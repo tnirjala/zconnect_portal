@@ -4,13 +4,14 @@ const ManageSessions = () => {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
 
   // Fetch all counseling sessions
   const fetchSessions = async () => {
     try {
       setLoading(true);
       setError('');
-      const response = await fetch('http://localhost:5000/api/sessions');
+      const response = await fetch(`${API_BASE_URL}/api/sessions`);
       if (!response.ok) {
         throw new Error('Failed to fetch sessions');
       }
@@ -31,7 +32,7 @@ const ManageSessions = () => {
   const updateSessionStatus = async (sessionId, newStatus) => {
     try {
       setError('');
-      const response = await fetch(`http://localhost:5000/api/sessions/${sessionId}/status`, {
+      const response = await fetch(`${API_BASE_URL}/api/sessions/${sessionId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

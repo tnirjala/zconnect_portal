@@ -27,6 +27,7 @@ const WorkshopParticipants = () => {
   const [participantToCancel, setParticipantToCancel] = useState(null);
   const [error, setError] = useState('');
   const [apiBaseUrl, setApiBaseUrl] = useState('');
+   const URL = process.env.REACT_APP_API_URL || window.location.origin;
 
   // Simple auth check
   useEffect(() => {
@@ -35,29 +36,21 @@ const WorkshopParticipants = () => {
       setError('Authentication required. Please log in as admin.');
     }
   }, []);
+ 
 
   // Detect API base URL
   useEffect(() => {
-    const currentOrigin = window.location.origin;
-    const possibleUrls = [
-      `${currentOrigin}/api`,
-      'http://localhost:3001/api',
-      'http://localhost:5000/api',
-      'http://localhost:8000/api'
-    ];
-    
-    setApiBaseUrl(possibleUrls[0]);
-    fetchWorkshops();
-  }, []);
+  setApiBaseUrl(`${URL}/api`);
+  fetchWorkshops();
+}, []);
 
   const makeApiRequest = async (endpoint, options = {}) => {
-    const possibleBaseUrls = [
-      apiBaseUrl,
-      '/api',
-      'http://localhost:3001/api',
-      'http://localhost:5000/api',
-      'http://localhost:8000/api'
-    ];
+  // Use the .env API_URL and some fallback relative URLs only
+  const possibleBaseUrls = [
+    `${URL}/api`,
+    '/api',
+  ].filter(Boolean);
+
 
     let lastError = null;
 

@@ -50,25 +50,28 @@ const StaffDashboard = () => {
     { key: 'cbtResources', label: 'CBT Resources', icon: <MessageSquare className="w-5 h-5" />, path: '/staff/cbt-resources' },
   ];
 
-  useEffect(() => {
-    const fetchDashboardStats = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch('http://localhost:5000/api/staff/dashboard/stats');
-        if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
-        const data = await res.json();
-        setDashboardStats(data);
-      } catch (error) {
-        console.error('Error fetching dashboard stats:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
-    if (activeMenu === 'dashboard') {
-      fetchDashboardStats();
+useEffect(() => {
+  const fetchDashboardStats = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`${API_BASE_URL}/api/staff/dashboard/stats`);
+      if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
+      const data = await res.json();
+      setDashboardStats(data);
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error);
+    } finally {
+      setLoading(false);
     }
-  }, [activeMenu]);
+  };
+
+  if (activeMenu === 'dashboard') {
+    fetchDashboardStats();
+  }
+}, [activeMenu]);
+
 
   const handleLogout = () => {
     localStorage.removeItem('user');

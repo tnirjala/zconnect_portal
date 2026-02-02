@@ -30,7 +30,9 @@ const RegisterWorkshop = () => {
   const [workshopToCancel, setWorkshopToCancel] = useState(null);
 
   const user = JSON.parse(localStorage.getItem('user') || '{}');
-  const API_BASE = 'http://localhost:5000/api';
+  const API_BASE_URL = `${process.env.REACT_APP_API_URL}/api`;
+
+
 
   useEffect(() => {
     fetchWorkshops();
@@ -40,7 +42,7 @@ const RegisterWorkshop = () => {
 
   const fetchWorkshops = async () => {
     try {
-      const response = await fetch(`${API_BASE}/workshops/approved`);
+      const response = await fetch(`${API_BASE_URL}/workshops/approved`);
       if (!response.ok) throw new Error('Failed to fetch workshops');
       const data = await response.json();
       setWorkshops(data);
@@ -54,7 +56,7 @@ const RegisterWorkshop = () => {
 
   const fetchUserWorkshops = async () => {
     try {
-      const response = await fetch(`${API_BASE}/workshops/my-workshops`, {
+      const response = await fetch(`${API_BASE_URL}/workshops/my-workshops`, {
         headers: {
           'user-email': user.email || ''
         }
@@ -69,7 +71,7 @@ const RegisterWorkshop = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(`${API_BASE}/categories`);
+      const response = await fetch(`${API_BASE_URL}/categories`);
       if (response.ok) {
         const data = await response.json();
         setCategories(data);
@@ -90,7 +92,7 @@ const RegisterWorkshop = () => {
     setSuccess('');
 
     try {
-      const response = await fetch(`${API_BASE}/workshops/${workshopId}/register`, {
+      const response = await fetch(`${API_BASE_URL}/workshops/${workshopId}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -126,7 +128,7 @@ const RegisterWorkshop = () => {
     if (!workshopToCancel) return;
 
     try {
-      const response = await fetch(`${API_BASE}/workshops/${workshopToCancel}/register`, {
+      const response = await fetch(`${API_BASE_URL}/workshops/${workshopToCancel}/register`, {
         method: 'DELETE',
         headers: {
           'user-email': user.email || ''

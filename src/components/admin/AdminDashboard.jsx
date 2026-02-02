@@ -57,7 +57,7 @@ const AdminDashboard = () => {
     {
       key: 'participants',
       icon: <FileTextOutlined />,
-      label: <Link to="/admin/participants">Participants</Link>,
+      label: <Link to="/admin/participants">Workshop Participants</Link>,
     },
     {
       key: 'session-review',

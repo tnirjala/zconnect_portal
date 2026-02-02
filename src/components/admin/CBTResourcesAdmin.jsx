@@ -3,10 +3,11 @@ import axios from 'axios';
 
 const CBTResourcesAdmin = () => {
   const [resources, setResources] = useState([]);
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const fetchResources = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/cbt-resources/all', {
+      const res = await axios.get(`${API_URL}/api/cbt-resources/all`, {
         headers: {
           'admin-email': 'zconnect.admin@gmail.com',
         },
@@ -21,7 +22,7 @@ const CBTResourcesAdmin = () => {
   const handleUpdateStatus = async (id, status) => {
     try {
       await axios.patch(
-        `http://localhost:5000/api/cbt-resources/${id}/status`,
+        `${API_URL}/api/cbt-resources/${id}/status`,
         { status },
         {
           headers: {
@@ -60,7 +61,7 @@ const CBTResourcesAdmin = () => {
 
               {res.type === 'image' && (
                 <img
-                  src={`http://localhost:5000${res.file_url}`}
+                  src={`${API_URL}${res.file_url}`}
                   alt={res.title}
                   className="w-full h-48 object-contain mb-3"
                 />
@@ -68,19 +69,19 @@ const CBTResourcesAdmin = () => {
 
               {res.type === 'video' && (
                 <video controls className="w-full mb-3">
-                  <source src={`http://localhost:5000${res.file_url}`} type="video/mp4" />
+                  <source src={`${API_URL}${res.file_url}`} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               )}
 
               {res.type === 'pdf' && (
-                <a
-                  href={`http://localhost:5000${res.file_url}`}
+                 <a
+                  href={`${API_URL}${res.file_url}`}
                   target="_blank"
                   rel="noreferrer"
                   style={{ color: '#AF5D73', textDecoration: 'underline' }}
-                  onMouseOver={(e) => e.target.style.color = '#8B4A5A'}
-                  onMouseOut={(e) => e.target.style.color = '#AF5D73'}
+                  onMouseOver={(e) => (e.target.style.color = '#8B4A5A')}
+                  onMouseOut={(e) => (e.target.style.color = '#AF5D73')}
                 >
                   View PDF
                 </a>

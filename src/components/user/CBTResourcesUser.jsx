@@ -10,7 +10,7 @@ const CBTResourcesUser = () => {
 
   const fetchResources = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/cbt-resources/approved');
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/cbt-resources/approved`);
       setResources(res.data);
     } catch (error) {
       console.error('Failed to fetch approved CBT resources:', error);

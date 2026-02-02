@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const BACKEND_URL = "http://localhost:5000"; // change if your backend runs elsewhere
+const BACKEND_URL = process.env.REACT_APP_API_URL;
 
 const SessionParticipants = () => {
   const [sessions, setSessions] = useState([]);

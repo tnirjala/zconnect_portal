@@ -9,6 +9,7 @@ import service4 from './images/service4.jpg';
 import service5 from './images/service5.jpg';
 import service6 from './images/service6.jpg';
 import whychoose from './images/whychoose.jpg';
+import logo from './images/logo.png';
 // Import images for counselors and testimonials
 import niru from './images/nirjala.jpg';
 import harish from './images/harish.jpg';
@@ -70,7 +71,8 @@ const ZConnectLanding = () => {
       window.removeEventListener('scroll', revealOnScroll);
     };
   }, []);
-
+  // Hamburger menu logic
+  const handleHamburger = () => setMobileMenuOpen(!mobileMenuOpen);
   return (
     <div className={styles['landing-page']}>
       {/* Custom Cursor */}
@@ -78,27 +80,23 @@ const ZConnectLanding = () => {
       <div className={styles['cursor-outer']}></div>
 
       {/* Header */}
-      <header className={styles.header}>
-        <div className={styles.container}>
-          <div className={styles.logo}>
-            <img src={require('./images/logo.png')} alt="ZConnect" />
-          </div>
-          <nav className={`${styles.nav} ${mobileMenuOpen ? styles.active : ''}`} id="nav-menu">
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-            <Link to="/programs">Programs</Link>
-            <Link to="/contact">Contact</Link>
-          </nav>
-          <a href="#" className={styles['login-btn']} onClick={() => navigate('/login')}>Login</a>
-          <button 
-            className={styles.hamburger}
-            id="hamburger"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            &#9776;
-          </button>
-        </div>
-      </header>
+          <header className={styles.header}>
+            <div className={styles.container}>
+              <div className={styles.logo}>
+                <img src={logo} alt="ZConnect" />
+              </div>
+              <nav className={`${styles.nav} ${mobileMenuOpen ? styles.active : ''}`} id="nav-menu">
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
+                <Link to="/programs">Programs</Link>
+                <Link to="/contact">Contact</Link>
+              </nav>
+              <a href="/login" className={styles['login-btn']} onClick={() => navigate('/login')}>Login</a>
+              <button className={styles.hamburger} id="hamburger" onClick={handleHamburger}>
+                &#9776;
+              </button>
+            </div>
+          </header>
 
       {/* Hero Section */}
       <section className={styles.hero} id="home">
@@ -124,7 +122,7 @@ const ZConnectLanding = () => {
             Let's build something extraordinary together.
           </p>
           <div className={styles['hero-buttons']}>
-            <a href="#" className={`${styles['btn']} ${styles['btn-primary']}`} onClick={() => navigate('/signup')}>Get Started</a>
+            <a href="signup" className={`${styles['btn']} ${styles['btn-primary']}`} onClick={() => navigate('/signup')}>Get Started</a>
             <a href="#services" className={`${styles['btn']} ${styles['btn-secondary']}`}>Learn More</a>
           </div>
         </div>
@@ -392,10 +390,10 @@ const ZConnectLanding = () => {
               <h3>ZCONNECT</h3>
               <p>Supporting mental wellness through compassionate care and professional guidance.</p>
               <div className={styles['social-links']}>
-                <a href="#" className={styles['social-link']}>f</a>
-                <a href="#" className={styles['social-link']}>ig</a>
-                <a href="#" className={styles['social-link']}>tw</a>
-                <a href="#" className={styles['social-link']}>in</a>
+                <a href="somewhere" className={styles['social-link']}>f</a>
+                <a href="somewhere" className={styles['social-link']}>ig</a>
+                <a href="somewhere" className={styles['social-link']}>tw</a>
+                <a href="somewhere" className={styles['social-link']}>in</a>
               </div>
               <div className={styles['emergency-box']}>
                 <h5>Crisis Support</h5>

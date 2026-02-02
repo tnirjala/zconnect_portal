@@ -19,7 +19,7 @@ const upload = multer({ storage });
 // Utility
 const getCreatedBy = (req) => parseInt(req.headers['staff-id'], 10);
 
-// 🟢 Upload file and insert into database
+// Upload file and insert into database
 router.post('/upload-file', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
@@ -56,9 +56,6 @@ router.post('/upload-file', upload.single('file'), async (req, res) => {
     return res.status(500).json({ error: 'Upload failed' });
   }
 });
-
-
-
 // Get resources uploaded by a specific staff
 router.get('/', async (req, res) => {
   try {
@@ -74,8 +71,6 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch resources' });
   }
 });
-
-
 // Delete a resource
 router.delete('/:id', async (req, res) => {
   try {
@@ -91,9 +86,7 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete resource' });
   }
 });
-
-
-// 🟢 Update a resource
+// Update a resource
 router.put('/update', async (req, res) => {
   try {
     const { id, title, type, description, file_url } = req.body;

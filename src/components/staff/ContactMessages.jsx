@@ -10,23 +10,26 @@ const ContactMessages = () => {
     fetchMessages();
   }, []);
 
-  const fetchMessages = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('http://localhost:5000/api/contact');
-      if (response.ok) {
-        const data = await response.json();
-        setMessages(data);
-      } else {
-        setError('Failed to load messages');
-      }
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-      setError('Network error. Please try again.');
-    } finally {
-      setLoading(false);
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+const fetchMessages = async () => {
+  try {
+    setLoading(true);
+    const response = await fetch(`${API_BASE_URL}/api/contact`);
+    if (response.ok) {
+      const data = await response.json();
+      setMessages(data);
+    } else {
+      setError('Failed to load messages');
     }
-  };
+  } catch (error) {
+    console.error('Error fetching messages:', error);
+    setError('Network error. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {

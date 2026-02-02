@@ -33,7 +33,8 @@ const UserSessions = () => {
   const [sessionToCancel, setSessionToCancel] = useState(null);
 
   const user = JSON.parse(localStorage.getItem('user') || '{}');
-  const API_BASE = 'http://localhost:5000/api';
+  const API_BASE = `${process.env.REACT_APP_API_URL}/api`;
+
 
   useEffect(() => {
     fetchSessions();
